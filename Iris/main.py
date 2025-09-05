@@ -20,8 +20,11 @@ names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
 dataset = read_csv(url, names=names)
 
 def print_data():
-    print(dataset.shape)
-    print(dataset.head())
+    print("shape: ", dataset.shape)
+
+    print("head: \n", dataset.head(20))
+
+    print("distribution: ", dataset.groupby('class').size())
 
 
 print_data()
