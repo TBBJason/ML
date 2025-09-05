@@ -14,17 +14,19 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 
+
+from visualizations import visualization
+
 # Loading the data:
 url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
 names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
 dataset = read_csv(url, names=names)
 
-def print_data():
-    print("shape: ", dataset.shape)
-
-    print("head: \n", dataset.head(20))
-
-    print("distribution: ", dataset.groupby('class').size())
 
 
-print_data()
+
+
+visuals = visualization(dataset)
+# visuals.print_data()
+# visuals.data_visualization()
+
