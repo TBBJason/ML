@@ -7,7 +7,9 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import StratifiedKFold
 from sklearn.svm import SVC
 from sklearn.model_selection import cross_val_score
-
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
 
 class algorithm:
     def __init__(self, dataset):
@@ -25,7 +27,7 @@ class algorithm:
         self.models.append(('CART', DecisionTreeClassifier()))
         self.models.append(('NB', GaussianNB()))
         self.models.append(('SVM', SVC(gamma='auto')))
-
+        # self.predictions = None
         self.results = []
         self.names = []
         for name, model in self.models:
@@ -36,6 +38,7 @@ class algorithm:
 
             print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
             self.bestModel()
+            self.evaluate()
     def bestModel(self):
         max = 0
         idx = 0
@@ -44,4 +47,11 @@ class algorithm:
                 max = self.results[i].mean()
                 idx = i
         print("the best model is: ", self.names[idx])
-        return
+        model = SVC(gamma='auto')
+        model.fit(self.X_train, self.Y_train)
+        self.predictions = model.predict(self.X_validation)
+
+    def evaluate(self):
+        # print("Accuracy Score: ", accuracy_score(self.Y_validation, self.predictions))
+        print("Confusion Matrix: ", confusion_matrix(self.Y_validation, self.predictions))
+        print("Classification Report: ", classification_report(self.Y_validation, self.predictions))
